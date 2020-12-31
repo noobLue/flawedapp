@@ -44,7 +44,6 @@ def init_user_data(request):
         user = User.objects.create_user('bob', 'bob@non.bob', 'password')
         user.save()
     except IntegrityError: 
-        print('user exists already')
         user = User.objects.filter(username='bob')[0]
 
     userData = UserData.objects.get_or_create(user=user, data='bob_secret_funny')
@@ -55,8 +54,7 @@ def init_user_data(request):
         user2 = User.objects.create_user('alice', 'alice@fake.name', 'drowssap')
         user2.save()
     except IntegrityError: 
-        user = User.objects.filter(username='alice')[0]
-        print('user exists already')
+        user2 = User.objects.filter(username='alice')[0]
 
     userData2 = UserData.objects.get_or_create(user=user2, data='alice_secret_hilarious')
     if(userData2[1]):
