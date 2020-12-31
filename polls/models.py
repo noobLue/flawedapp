@@ -1,19 +1,23 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
-from django.contrib.auth.models import User
 
 class Entry(models.Model):
     data = models.CharField(unique=False, max_length=10)
     def __str__(self):
         return str(self.id)
+
+class UserData(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    data = models.CharField(max_length=100)
+    def __str__(self):
+        return str(self.data)
+
+class ChatMessage(models.Model):
+    user_to = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_from = models.ForeignKey(User, on_delete=models.CASCADE, related_name='%(class)s_stuf')
+    message = models.CharField(max_length = 100)
     
-
-class Question(models.Model):
-    question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published')
-
-class Choice(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    choice_text = models.CharField(max_length=200)
-    votes = models.IntegerField(default=0)
+    def __str__(self):
+        return str(self.user_from) + ": " + str(self.message)
