@@ -15,7 +15,7 @@ def index(request):
 def logged_in(request):
     userData = UserData.objects.filter(user = request.user)
 
-    return HttpResponse("Your name is: " + str(request.user) + "view your secret here: <a href=/accounts/profile/" + str(userData[0].pk) + ">profile secret</a>")
+    return HttpResponse("Your name is: " + str(request.user) + ", view your secret here: <a href=/accounts/profile/" + str(userData[0].pk) + ">profile secret</a>")
 
 @login_required
 def logged_in_secret(request, secret_id):
@@ -58,7 +58,7 @@ def init_user_data(request):
         user = User.objects.filter(username='alice')[0]
         print('user exists already')
 
-    userData2 = UserData.objects.get_or_create(user=user, data='alice_secret_hilarious')
+    userData2 = UserData.objects.get_or_create(user=user2, data='alice_secret_hilarious')
     if(userData2[1]):
         userData2[0].save()
 
